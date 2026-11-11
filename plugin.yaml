@@ -1,0 +1,56 @@
+name: hermes-robots
+version: 0.1.0
+description: >-
+  Drive robots from Hermes through one set of tools and one shared safety interlock. Pluggable backends:
+  Microduck (Pollen Robotics' bipedal duck running its real RL policies in MuJoCo), any ROS 1 / ROS 2 robot
+  over rosbridge (TurtleBot3 in Gazebo, real bases), and a dependency-free mock. The pre_tool_call interlock enforces
+  speed and duration caps, a projected-path geofence and an e-stop latch only a human can clear, and fails closed.
+author: Arca Computer (arcabotai)
+license: MIT
+homepage: https://github.com/arcabotai/hermes-robots
+manifest_version: 2
+requires_hermes: ">=0.21.6"
+tags: [robotics, ros, ros2, rosbridge, mujoco, microduck, turtlebot3, simulation, safety]
+provides_tools:
+  - robot_list
+  - robot_connect
+  - robot_state
+  - robot_look
+  - robot_move
+  - robot_turn
+  - robot_action
+  - robot_stop
+provides_hooks:
+  - pre_tool_call
+python_dependencies:
+  - "websocket-client>=1.6,<2"
+config_schema:
+  active:
+    type: str
+    default: ""
+    label: Active robot
+    description: "Robot the tools use when none is named (default: the first one in robots)"
+  robots:
+    type: dict
+    label: Robots
+    description: >-
+      name -> {backend: mock|microduck|ros, ...options, safety: {...}}. microduck: mode (mock|sim), url, timeout_s.
+      ros: host, port, connect_timeout_s, call_timeout_s, topics{cmd_vel, cmd_vel_type, odom, odom_type, camera}.
+      mock: half_x, half_y, cones[{x,y}], start{x,y,yaw_deg}, realtime. Setting this replaces the built-in pair.
+    default:
+      mock: {backend: mock}
+      duck: {backend: microduck, mode: mock}
+  safety:
+    type: dict
+    label: Safety interlock (all robots)
+    description: >-
+      max_linear_mps, max_reverse_mps, max_angular_rps, max_duration_s, default_duration_s, turn_rate_rps,
+      over_limit_action (block|clamp), geofence{enabled, x_min, x_max, y_min, y_max, margin_m, max_pose_age_s};
+      microduck: max_head_rad; ros: write_allowlist{topics, services}, motion_topic_patterns, max_publish_rate_hz.
+      A robot's own safety block wins; backend hard limits (Microduck 0.25 m/s) cannot be raised.
+    default: {}
+  camera:
+    type: dict
+    label: Camera
+    description: "width, height, return_mode (path|inline), keep_last"
+    default: {width: 640, height: 480, return_mode: path, keep_last: 20}
