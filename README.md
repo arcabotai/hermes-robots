@@ -155,7 +155,7 @@ class ReachyMiniBackend(RobotBackend):
 
 ## Verification
 
-* **Unit and behaviour tests:** `python -m pytest tests` (no ROS or MuJoCo needed). They cover every interlock rule
+* **Unit and behaviour tests:** `python -m pytest tests` (91 tests, no ROS or MuJoCo needed). They cover every interlock rule
   against both simulated robots, the Microduck actions, the sim HTTP client against a stub server, the ros backend
   against an in-process fake rosbridge that speaks the real v2 protocol, a custom backend, registration and `/robot`.
 * **Real robots:** `pytest tests/live --live-ros=host:9090 --live-microduck=http://127.0.0.1:8765`.
@@ -164,7 +164,8 @@ class ReachyMiniBackend(RobotBackend):
 * **Through Hermes:** `scripts/e2e_hermes.py` drives an installed copy through `model_tools.handle_function_call`,
   the agent loop's own dispatch path with the real `pre_tool_call` hook, and through the `/robot` handler.
 
-Results are in [docs/verification](docs/verification).
+Results are in [docs/verification](docs/verification). The last Blaxel run passed 102 of 102 tests against ROS 2 Jazzy
+turtlesim and the MuJoCo Microduck. Through Hermes' dispatch, all 36 checks passed against mock, Microduck and ROS 2 Humble.
 
 ## Disclosure
 
