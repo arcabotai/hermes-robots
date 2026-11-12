@@ -38,13 +38,15 @@ if opt.ros:
 if opt.microduck:
     robots["mujoco_duck"] = {"backend": "microduck", "mode": "sim", "url": opt.microduck}
 
-import yaml  # noqa: E402
+try:
+    import yaml  # noqa: E402
+except ImportError:  # Hermes ships its own YAML policy module instead of PyYAML
+    import hermes_yaml as yaml  # noqa: E402
 
 cfg_path = home / "config.yaml"
-cfg = yaml.safe_load(cfg_path.read_text()) if cfg_path.exists() else {}
-cfg = cfg or {}
+cfg = (yaml.safe_load(cfg_path.read_text()) if cfg_path.exists() else {}) or {}
 cfg.setdefault("plugins", {}).setdefault("entries", {}).setdefault("hermes-robots", {})["settings"] = {"robots": robots}
-cfg_path.write_text(yaml.safe_dump(cfg))
+cfg_path.write_text(json.dumps(cfg, indent=2))  # JSON is valid YAML
 
 from hermes_cli.plugins import discover_plugins, get_plugin_command_handler  # noqa: E402
 

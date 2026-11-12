@@ -1,0 +1,12 @@
+PASSED tests/live/test_live.py::test_ros_connect_and_pose
+PASSED tests/live/test_live.py::test_ros_move_turn_and_stop
+PASSED tests/live/test_live.py::test_ros_interlock_blocks_on_the_real_robot
+PASSED tests/live/test_live.py::test_ros_geofence_blocks_on_live_odom
+PASSED tests/live/test_live.py::test_ros_camera_and_echo
+PASSED tests/live/test_live.py::test_ros_estop_aborts_and_latches
+SKIPPED [1] tests/live/test_live.py:113: pass --live-microduck=http://host:port (sim/microduck/server.py) to run against the MuJoCo sim
+SKIPPED [1] tests/live/test_live.py:120: pass --live-microduck=http://host:port (sim/microduck/server.py) to run against the MuJoCo sim
+SKIPPED [1] tests/live/test_live.py:126: pass --live-microduck=http://host:port (sim/microduck/server.py) to run against the MuJoCo sim
+SKIPPED [1] tests/live/test_live.py:134: pass --live-microduck=http://host:port (sim/microduck/server.py) to run against the MuJoCo sim
+SKIPPED [1] tests/live/test_live.py:142: pass --live-microduck=http://host:port (sim/microduck/server.py) to run against the MuJoCo sim
+========================= 6 passed, 5 skipped in 5.19s =========================

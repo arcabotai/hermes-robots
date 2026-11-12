@@ -1,0 +1,25 @@
+
+✓ manifest — plugin.yaml parses
+✓ manifest fields — name, version, description present
+✓ requires_hermes — spec '>=0.21.6' parses
+✓ config schema — shape valid
+✓ requires_env — all entries UPPER_SNAKE
+✓ oauth — not declared
+✓ loadable — entry: __init__.py
+✓ python dependencies — 1 requirements from manifest
+✓ capability probe — register() ran in isolation
+✓ declared tools — matches registrations
+✓ declared hooks — matches registrations
+✓ declared middleware — matches registrations
+✓ built-in tool collisions — no collisions
+✓ security scan — safe
+✓ no core override — no runtime rebinds of Hermes core
+⚠ private core imports (catalog rule 9: public surfaces only; these can break on
+any release): scripts/e2e_hermes.py:49 hermes_cli.plugins.discover_plugins; 
+scripts/e2e_hermes.py:52 model_tools; scripts/e2e_hermes.py:49 
+hermes_cli.plugins.get_plugin_command_handler. Use ctx.* / documented plugin 
+APIs, or open an issue for the seam you need.
+◆ Isolation — runs in the plugin host (plugins.isolation: host)
+
+Validation passed.
+exit=0

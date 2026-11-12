@@ -1,0 +1,86 @@
+BLOCKED robot_move [over_speed_forward]: forward speed 5.00 m/s exceeds mock's limit of 0.50 m/s | args={"robot": "mock", "linear_mps": 5.0, "duration_s": 30}
+BLOCKED robot_move [over_duration]: duration 999.0s exceeds mock's maximum of 5.0s per command | args={"robot": "mock", "linear_mps": 0.3, "duration_s": 999}
+E-STOP engaged by agent: e2e
+BLOCKED robot_move [estop_latched]: e-stop is latched (e2e); all motion is refused until a human clears it with /robot clear | args={"robot": "mock", "linear_mps": 0.15, "duration_s": 1}
+e-stop cleared by human
+BLOCKED robot_move [over_speed_forward]: forward speed 5.00 m/s exceeds duck's limit of 0.25 m/s | args={"robot": "duck", "linear_mps": 5.0, "duration_s": 30}
+BLOCKED robot_move [over_duration]: duration 999.0s exceeds duck's maximum of 8.0s per command | args={"robot": "duck", "linear_mps": 0.25, "duration_s": 999}
+E-STOP engaged by agent: e2e
+BLOCKED robot_move [estop_latched]: e-stop is latched (e2e); all motion is refused until a human clears it with /robot clear | args={"robot": "duck", "linear_mps": 0.125, "duration_s": 1}
+e-stop cleared by human
+BLOCKED robot_action [over_head_limit]: head yaw 1.50 rad exceeds the limit of ±0.60 rad | args={"robot": "duck", "action": "head", "params": {"yaw": 1.5}}
+BLOCKED robot_move [over_speed_forward]: forward speed 5.00 m/s exceeds turtle's limit of 1.00 m/s | args={"robot": "turtle", "linear_mps": 5.0, "duration_s": 30}
+BLOCKED robot_move [over_duration]: duration 999.0s exceeds turtle's maximum of 5.0s per command | args={"robot": "turtle", "linear_mps": 0.5, "duration_s": 999}
+E-STOP engaged by agent: e2e
+BLOCKED robot_move [estop_latched]: e-stop is latched (e2e); all motion is refused until a human clears it with /robot clear | args={"robot": "turtle", "linear_mps": 0.25, "duration_s": 1}
+e-stop cleared by human
+BLOCKED robot_action [service_not_allowlisted]: service '/kill' is not on the write allowlist ['/turtle1/teleport_absolute']; a human can add it under safety.write_allowlist.services | args={"robot": "turtle", "action": "call_service", "params": {"service": "/kill"}}
+
+=== plugin loaded through Hermes
+[PASS] robot_list {} -> {"ok": true, "robots": [{"robot": "mock", "kind": "mock", "active": true, "loaded": false, "capabilities": ["camera", "move", "pose"], "actions": ["cones", "teleport"], "via": "built-in 2D differential-drive sim (no depe
+    robots: ['mock:mock', 'duck:microduck', 'turtle:ros']
+    /robot list -> * mock         mock  actions: cones, teleport |   duck         microduck (mock)  actions: head, kick, kick_ball, sit, stand |   turtle       ros  actions: call_service, echo, publish, topics
+
+=== mock: connect, look, move, turn, interlock, e-stop
+[PASS] robot_connect {"robot": "mock"} -> {"ok": true, "active": "mock", "connection": {"connected": true}, "kind": "mock", "via": "built-in 2D differential-drive sim (no dependencies)", "capabilities": ["camera", "move", "pose"], "views": ["camera", "overhead"]
+[PASS] robot_state {"robot": "mock"} -> {"ok": true, "robot": "mock", "kind": "mock", "via": "built-in 2D differential-drive sim (no dependencies)", "capabilities": ["camera", "move", "pose"], "views": ["camera", "overhead"], "limits": {"max_linear_mps": 0.5, 
+[PASS] robot_look {"robot": "mock"} -> {"ok": true, "robot": "mock", "view": "camera", "path": "$HERMES_HOME/plugin-data/agent-plugin-hermes-robots-8215b662/snapshots/mock-camera-20261111-210235-970.png", "mime": "image/png", "width": 320, "height": 240, 
+[PASS] robot_move {"robot": "mock", "linear_mps": 0.3, "duration_s": 2} -> {"ok": true, "robot": "mock", "command": {"linear_mps": 0.3, "angular_rps": 0.0, "duration_s": 2.0}, "interlock": ["geofence ok (ends near (0.60, 0.00))"], "end_reason": "completed", "ran_for_s": 2.0, "pose_before": {"x"
+    displacement_m: 0.6 end_reason: completed
+[PASS] robot_turn {"robot": "mock", "degrees": 30} -> {"ok": true, "robot": "mock", "degrees": 30.0, "interlock": ["geofence ok"], "end_reason": "completed", "ran_for_s": 1.05, "pose_before": {"x": 0.6, "y": 0.0, "yaw_deg": 0.0, "age_s": 0.0, "frame_id": "odom"}, "pose_afte
+[PASS] robot_move {"robot": "mock", "linear_mps": 5.0, "duration_s": 30} -> {"error": "hermes-robots interlock BLOCKED robot_move [over_speed_forward]: forward speed 5.00 m/s exceeds mock's limit of 0.50 m/s. The robot did not move. Do not retry with a smaller, shorter or slower version on your 
+[PASS] robot_move {"robot": "mock", "linear_mps": 0.3, "duration_s": 999} -> {"error": "hermes-robots interlock BLOCKED robot_move [over_duration]: duration 999.0s exceeds mock's maximum of 5.0s per command. The robot did not move. Do not retry with a smaller, shorter or slower version on your ow
+[PASS] robot_stop {"robot": "mock", "estop": true, "reason": "e2e"} -> {"ok": true, "stopped": {"mock": "stopped", "duck": "stopped", "turtle": "stopped"}, "estop": {"latched": true, "reason": "e2e", "source": "agent", "ts": 1794441755.97977}, "note": "e-stop latched: only the human can cle
+[PASS] robot_move {"robot": "mock", "linear_mps": 0.15, "duration_s": 1} -> {"error": "hermes-robots interlock BLOCKED robot_move [estop_latched]: e-stop is latched (e2e); all motion is refused until a human clears it with /robot clear. The robot did not move. Do not retry with a smaller, shorte
+    /robot clear -> E-stop cleared.
+[PASS] robot_move {"robot": "mock", "linear_mps": 0.3, "duration_s": 1} -> {"ok": true, "robot": "mock", "command": {"linear_mps": 0.3, "angular_rps": 0.0, "duration_s": 1.0}, "interlock": ["geofence ok (ends near (0.86, 0.15))"], "end_reason": "completed", "ran_for_s": 1.0, "pose_before": {"x"
+
+=== duck: connect, look, move, turn, interlock, e-stop
+[PASS] robot_connect {"robot": "duck"} -> {"ok": true, "active": "duck", "connection": {"connected": true, "mode": "mock", "via": "built-in kinematic mock duck (no MuJoCo, no policies)", "policy": "mock"}, "kind": "microduck", "via": "built-in kinematic mock duc
+[PASS] robot_state {"robot": "duck"} -> {"ok": true, "robot": "duck", "kind": "microduck", "via": "built-in kinematic mock duck (no MuJoCo, no policies)", "capabilities": ["camera", "move", "pose", "turn"], "views": ["duck_eye", "chase", "overhead"], "limits":
+[PASS] robot_look {"robot": "duck"} -> {"ok": true, "robot": "duck", "view": "duck_eye", "path": "$HERMES_HOME/plugin-data/agent-plugin-hermes-robots-8215b662/snapshots/duck-duck_eye-20261111-210236-126.png", "mime": "image/png", "width": 640, "height": 4
+[PASS] robot_move {"robot": "duck", "linear_mps": 0.25, "duration_s": 2} -> {"ok": true, "robot": "duck", "command": {"linear_mps": 0.25, "angular_rps": 0.0, "duration_s": 2.0}, "interlock": ["geofence ok (ends near (-0.10, 0.00))"], "end_reason": "completed", "pose_before": {"x": -0.6, "y": 0.0
+    displacement_m: 0.2 end_reason: completed
+[PASS] robot_turn {"robot": "duck", "degrees": 30} -> {"ok": true, "robot": "duck", "degrees": 30.0, "interlock": ["geofence ok"], "end_reason": "completed", "pose_before": {"x": -0.4, "y": 0.0, "yaw_deg": 0.0, "trunk_height_m": 0.116}, "pose_after": {"x": -0.4, "y": 0.0, "
+[PASS] robot_move {"robot": "duck", "linear_mps": 5.0, "duration_s": 30} -> {"error": "hermes-robots interlock BLOCKED robot_move [over_speed_forward]: forward speed 5.00 m/s exceeds duck's limit of 0.25 m/s. The robot did not move. Do not retry with a smaller, shorter or slower version on your 
+[PASS] robot_move {"robot": "duck", "linear_mps": 0.25, "duration_s": 999} -> {"error": "hermes-robots interlock BLOCKED robot_move [over_duration]: duration 999.0s exceeds duck's maximum of 8.0s per command. The robot did not move. Do not retry with a smaller, shorter or slower version on your ow
+[PASS] robot_stop {"robot": "duck", "estop": true, "reason": "e2e"} -> {"ok": true, "stopped": {"mock": "stopped", "duck": "stopped", "turtle": "stopped"}, "estop": {"latched": true, "reason": "e2e", "source": "agent", "ts": 1794441756.136415}, "note": "e-stop latched: only the human can cl
+[PASS] robot_move {"robot": "duck", "linear_mps": 0.125, "duration_s": 1} -> {"error": "hermes-robots interlock BLOCKED robot_move [estop_latched]: e-stop is latched (e2e); all motion is refused until a human clears it with /robot clear. The robot did not move. Do not retry with a smaller, shorte
+    /robot clear -> E-stop cleared.
+[PASS] robot_move {"robot": "duck", "linear_mps": 0.25, "duration_s": 1} -> {"ok": true, "robot": "duck", "command": {"linear_mps": 0.25, "angular_rps": 0.0, "duration_s": 1.0}, "interlock": ["geofence ok (ends near (-0.18, 0.12))"], "end_reason": "completed", "pose_before": {"x": -0.4, "y": 0.0
+
+=== duck: actions
+[PASS] robot_action {"robot": "duck", "action": "kick_ball"} -> {"ok": true, "robot": "duck", "action": "kick_ball", "interlock": [], "end_reason": "completed", "pose_before": {"x": -0.313, "y": 0.05, "yaw_deg": 30.0, "trunk_height_m": 0.116}, "pose_after": {"x": 0.11, "y": -0.054, "
+[PASS] robot_action {"robot": "duck", "action": "head", "params": {"yaw": 1.5}} -> {"error": "hermes-robots interlock BLOCKED robot_action [over_head_limit]: head yaw 1.50 rad exceeds the limit of \u00b10.60 rad. The robot did not move. Do not retry with a smaller, shorter or slower version on your own
+[PASS] robot_action {"robot": "turtle", "action": "call_service", "params": {"service": "/turtle1/teleport_absolute", "request": {"x": 5.5, "y": 5.5, "theta": 0.0}}} -> {"ok": true, "robot": "turtle", "action": "call_service", "interlock": [], "service": "/turtle1/teleport_absolute", "response": {}}
+
+=== turtle: connect, look, move, turn, interlock, e-stop
+[PASS] robot_connect {"robot": "turtle"} -> {"ok": true, "active": "turtle", "connection": {"connected": true, "via": "rosbridge ws://127.0.0.1:9090"}, "kind": "ros", "via": "rosbridge ws://127.0.0.1:9090", "capabilities": ["camera", "move", "pose"], "views": ["ca
+[PASS] robot_state {"robot": "turtle"} -> {"ok": true, "robot": "turtle", "kind": "ros", "via": "rosbridge ws://127.0.0.1:9090", "capabilities": ["camera", "move", "pose"], "views": ["camera"], "limits": {"max_linear_mps": 1.0, "max_reverse_mps": 0.2, "max_angul
+[PASS] robot_look {"robot": "turtle"} -> {"ok": true, "robot": "turtle", "view": "camera", "path": "$HERMES_HOME/plugin-data/agent-plugin-hermes-robots-8215b662/snapshots/turtle-camera-20261111-210236-698.png", "mime": "image/png", "width": 320, "height": 2
+[PASS] robot_move {"robot": "turtle", "linear_mps": 0.5, "duration_s": 2} -> {"ok": true, "robot": "turtle", "command": {"linear_mps": 0.5, "angular_rps": 0.0, "duration_s": 2.0}, "interlock": ["geofence ok (ends near (6.50, 5.50))"], "topic": "/turtle1/cmd_vel", "published": 20, "ran_for_s": 2.0
+    displacement_m: 1.008 end_reason: completed
+[PASS] robot_turn {"robot": "turtle", "degrees": 30} -> {"ok": true, "robot": "turtle", "degrees": 30.0, "interlock": ["geofence ok"], "topic": "/turtle1/cmd_vel", "published": 11, "ran_for_s": 1.05, "end_reason": "completed", "pose_before": {"frame_id": "turtlesim", "child_f
+[PASS] robot_move {"robot": "turtle", "linear_mps": 5.0, "duration_s": 30} -> {"error": "hermes-robots interlock BLOCKED robot_move [over_speed_forward]: forward speed 5.00 m/s exceeds turtle's limit of 1.00 m/s. The robot did not move. Do not retry with a smaller, shorter or slower version on you
+[PASS] robot_move {"robot": "turtle", "linear_mps": 0.5, "duration_s": 999} -> {"error": "hermes-robots interlock BLOCKED robot_move [over_duration]: duration 999.0s exceeds turtle's maximum of 5.0s per command. The robot did not move. Do not retry with a smaller, shorter or slower version on your 
+[PASS] robot_stop {"robot": "turtle", "estop": true, "reason": "e2e"} -> {"ok": true, "stopped": {"mock": "stopped", "duck": "stopped", "turtle": "stopped"}, "estop": {"latched": true, "reason": "e2e", "source": "agent", "ts": 1794441759.890705}, "note": "e-stop latched: only the human can cl
+[PASS] robot_move {"robot": "turtle", "linear_mps": 0.25, "duration_s": 1} -> {"error": "hermes-robots interlock BLOCKED robot_move [estop_latched]: e-stop is latched (e2e); all motion is refused until a human clears it with /robot clear. The robot did not move. Do not retry with a smaller, shorte
+    /robot clear -> E-stop cleared.
+[PASS] robot_move {"robot": "turtle", "linear_mps": 0.5, "duration_s": 1} -> {"ok": true, "robot": "turtle", "command": {"linear_mps": 0.5, "angular_rps": 0.0, "duration_s": 1.0}, "interlock": ["geofence ok (ends near (6.94, 5.75))"], "topic": "/turtle1/cmd_vel", "published": 10, "ran_for_s": 1.0
+[PASS] robot_action {"robot": "turtle", "action": "topics", "params": {"kind": "topics"}} -> {"ok": true, "robot": "turtle", "action": "topics", "interlock": [], "via": "rosbridge ws://127.0.0.1:9090", "topics": [{"name": "/camera/image_raw", "type": "sensor_msgs/msg/Image"}, {"name": "/camera/image_raw/compress
+[PASS] robot_action {"robot": "turtle", "action": "call_service", "params": {"service": "/kill"}} -> {"error": "hermes-robots interlock BLOCKED robot_action [service_not_allowlisted]: service '/kill' is not on the write allowlist ['/turtle1/teleport_absolute']; a human can add it under safety.write_allowlist.services. T
+
+=== /robot log
+21:02:35  robot_move  [over_speed_forward]  forward speed 5.00 m/s exceeds mock's limit of 0.50 m/s
+21:02:35  robot_move  [over_duration]  duration 999.0s exceeds mock's maximum of 5.0s per command
+21:02:36  robot_move  [estop_latched]  e-stop is latched (e2e); all motion is refused until a human clears it with /robot clear
+21:02:36  robot_move  [over_speed_forward]  forward speed 5.00 m/s exceeds duck's limit of 0.25 m/s
+21:02:36  robot_move  [over_duration]  duration 999.0s exceeds duck's maximum of 8.0s per command
+21:02:36  robot_move  [estop_latched]  e-stop is latched (e2e); all motion is refused until a human clears it with /robot clear
+21:02:36  robot_action  [over_head_limit]  head yaw 1.50 rad exceeds the limit of ±0.60 rad
+21:02:39  robot_move  [over_speed_forward]  forward speed 5.00 m/s exceeds turtle's limit of 1.00 m/s
+21:02:39  robot_move  [over_duration]  duration 999.0s exceeds turtle's maximum of 5.0s per command
+21:02:39  robot_move  [estop_latched]  e-stop is latched (e2e); all motion is refused until a human clears it with /robot clear
+21:02:41  robot_action  [service_not_allowlisted]  service '/kill' is not on the write allowlist ['/turtle1/teleport_absolute']; a human can add it under safety.write_allowlist.services
+
+RESULT: ALL PASSED

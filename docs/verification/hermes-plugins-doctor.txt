@@ -1,0 +1,5 @@
+Plugin Doctor: $HERMES_HOME/plugins/hermes-robots
+  manifest: hermes-robots 0.1.0 (standalone)
+  OK: runtime discovery, manifest parsing, import, and registration passed
+  registrations: 8 tool(s), 1 hook(s)
+exit=0
